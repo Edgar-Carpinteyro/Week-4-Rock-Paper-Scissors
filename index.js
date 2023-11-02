@@ -1,8 +1,13 @@
 //global variables
+const userText = document.getElementById("user");
+const computerText = document.getElementById("computer");
+const messageText = document.getElementById("message");
 
-let computerScore = 0;
+const playButton = document.getElementById("playButton");
 
 let userScore = 0;
+let computerScore = 0;
+let gameOver = false;
 
 function getUserChoice() {
     let choice = prompt("Enter your choice in lowercase letters: rock, paper, or scissors");
@@ -18,49 +23,34 @@ function getComputerChoice() {
     return choice[randomNumber];
 }
 
-function compareChoice() {
-    
-    const userChoice = getUserChoice();
-    const computerChoice = getComputerChoice();
+playButton.addEventListener("click", function startGame() {
+    let user =  getUserChoice();
+    let computer = getComputerChoice();
 
-    if (userChoice === computerChoice){
-        console.log("Tie!");
-    } else if(userChoice === "rock" && computerChoice === "scissors") {
-        console.log("User wins!");
-        return userScore = userScore + 1;
-    } else if(userChoice === "rock" && computerChoice === "paper") {
-        console.log("User lost!");
-        return computerScore = computerScore + 1;
-    } else if(userChoice === "paper" && computerChoice === "rock") {
-        console.log("User wins!");
-        return userScore = userScore + 1;
-    } else if(userChoice === "paper" && computerChoice === "scissors") {
-        console.log("User lost!");
-        return computerScore = computerScore + 1;
-    } else if(userChoice === "scissors" && computerChoice === "paper") {
-        console.log("User wins!");
-        return userScore = userScore + 1;
-    } else if(userChoice === "scissors" && computerChoice === "rock") {
-        console.log("User lost!!");
-        return computerScore = computerScore + 1;
+    if(user === computer){
+        messageText.textContent = "It's a tie. Try again!";
+    }  else if(
+        (user === "rock" && computer === "scissors") ||
+        (user === "paper" && computer=== "rock") ||
+        (user === "scissors" && computer === "paper") 
+    ) {
+        userScore++;
+        userText.textContent = "User Score: " + userScore;
+        messageText.textContent = "User wins!";
     } else {
-        console.log("Check your grammar!");
-    }  
+        computerScore++;
+        computerText.textContent = "Computer Score: " + computerScore;
+        messageText.textContent = "User lost!";
+    }
+    gameWinner();
+})
+
+function gameWinner() {
+    
+    if (userScore === 2) {
+        return messageText.textContent = "Congratulations. User won the game!!!"
+    } else if (computerScore === 2) {
+        return messageText.textContent = "Game Over. Computer won the game!"
+    }
 }
 
-console.log(compareChoice());
-console.log(userScore);
-console.log(computerScore);
-
-function playGame() {
-  
-        if (userScore === 2) {
-            console.log("Congratulations!")
-        } else if (compareChoice === 2) {
-            console.log("Computer wins!")
-        } else {
-            console.log("Try again")
-        }
-}
-
-console.log(playGame());
